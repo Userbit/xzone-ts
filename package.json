@@ -1,0 +1,23 @@
+{
+  "name": "xzone",
+  "version": "1.0.0",
+  "description": "xzone",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Userbit/xzone-ts.git"
+  },
+  "author": "Userbit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Userbit/xzone-ts/issues"
+  },
+  "homepage": "https://github.com/Userbit/xzone-ts#readme",
+  "devDependencies": {
+    "@types/node": "^13.1.8",
+    "typescript": "^3.8.0-beta"
+  }
+}
