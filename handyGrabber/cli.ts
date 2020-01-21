@@ -1,17 +1,17 @@
-import types from "./types";
 import * as yargs from "yargs";
+import types from "./types";
 
 type Options = { [option: string]: yargs.Options };
 
 const generalOptions: Options = {
   [types.Option.stage]: {
     desc: "Choose a stage of processing",
-    choices: [...Object.keys(types.stage)] as const,
+    choices: [...Object.keys(types.stage)],
     demandOption: true
   },
   [types.Option.log]: {
     desc: "Log processing?",
-    choices: [...Object.keys(types.log)] as const,
+    choices: [...Object.keys(types.log)],
     demandOption: true
   }
 };
@@ -19,7 +19,7 @@ const generalOptions: Options = {
 const dataOptions: Options = {
   [types.Option.entity]: {
     desc: "Choose an entity",
-    choices: [...Object.keys(types.entity)] as const,
+    choices: [...Object.keys(types.entity)],
     demandOption: true
   }
 };
@@ -39,19 +39,15 @@ type MyArgv = {
 const dataMod: yargs.CommandModule = {
   command: types.Command.data,
   describe: "Get data from remote",
-  builder: yargs => yargs.options(generalOptions).options(dataOptions),
-  handler: function(argv) {
-    // ...
-  }
+  builder: _yargs => _yargs.options(generalOptions).options(dataOptions),
+  handler: () => undefined
 };
 
 const imgMod: yargs.CommandModule = {
   command: types.Command.img,
   describe: "Get images from remote",
-  builder: yargs => yargs.options(generalOptions).options(imgOptions),
-  handler: function(argv) {
-    // ...
-  }
+  builder: _yargs => _yargs.options(generalOptions).options(imgOptions),
+  handler: () => undefined
 };
 
 const argv = (yargs

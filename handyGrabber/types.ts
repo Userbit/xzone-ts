@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+
 namespace Types {
   export enum Command {
     data = "data",
