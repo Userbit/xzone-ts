@@ -3,29 +3,29 @@
 namespace Types {
   export enum Command {
     data = "data",
-    img = "img"
+    img = "img",
   }
 
   export enum Option {
     entity = "entity",
     stage = "stage",
-    log = "log"
+    log = "log",
   }
 
   export enum entity {
     movie = "movie",
-    torrent = "torrent"
+    torrent = "torrent",
   }
 
   export enum stage {
     first = "first",
     upsert = "upsert",
-    check = "check"
+    check = "check",
   }
 
   export enum log {
     yes = "yes",
-    no = "no"
+    no = "no",
   }
 }
 

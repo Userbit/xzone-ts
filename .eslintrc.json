@@ -3,17 +3,26 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "tsconfigRootDir": ".",
-    "project": ["./tsconfig.json"]
+    "project": ["tsconfig.json"]
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint",
+
+    // Put Prettier last!
+    "prettier"
+  ],
   "extends": [
     "airbnb-typescript",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+
     // Put all Prettier plugins last!
-    "prettier",
+    "plugin:prettier/recommended",
     "prettier/@typescript-eslint"
-  ]
+  ],
+  "rules": {
+    // Rules
+  }
 }

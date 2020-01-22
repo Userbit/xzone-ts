@@ -7,21 +7,21 @@ const generalOptions: Options = {
   [types.Option.stage]: {
     desc: "Choose a stage of processing",
     choices: [...Object.keys(types.stage)],
-    demandOption: true
+    demandOption: true,
   },
   [types.Option.log]: {
     desc: "Log processing?",
     choices: [...Object.keys(types.log)],
-    demandOption: true
-  }
+    demandOption: true,
+  },
 };
 
 const dataOptions: Options = {
   [types.Option.entity]: {
     desc: "Choose an entity",
     choices: [...Object.keys(types.entity)],
-    demandOption: true
-  }
+    demandOption: true,
+  },
 };
 
 const imgOptions: Options = {
@@ -39,15 +39,15 @@ type MyArgv = {
 const dataMod: yargs.CommandModule = {
   command: types.Command.data,
   describe: "Get data from remote",
-  builder: _yargs => _yargs.options(generalOptions).options(dataOptions),
-  handler: () => undefined
+  builder: (_yargs) => _yargs.options(generalOptions).options(dataOptions),
+  handler: () => undefined,
 };
 
 const imgMod: yargs.CommandModule = {
   command: types.Command.img,
   describe: "Get images from remote",
-  builder: _yargs => _yargs.options(generalOptions).options(imgOptions),
-  handler: () => undefined
+  builder: (_yargs) => _yargs.options(generalOptions).options(imgOptions),
+  handler: () => undefined,
 };
 
 const argv = (yargs
