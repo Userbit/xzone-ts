@@ -1,10 +1,12 @@
 const { defaults: tsjPreset } = require("ts-jest/presets");
 
 module.exports = {
-  preset: "ts-jest",
+  // preset: "ts-jest",
   testEnvironment: "node",
-  coverageDirectory: "./out/jest-coverage",
+  coverageDirectory: "./.out/jest-coverage",
+  setupFilesAfterEnv: ["./jest.setup.js"],
   transform: {
     ...tsjPreset.transform,
   },
+  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/\\..*/"],
 };

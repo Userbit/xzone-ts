@@ -6,11 +6,11 @@
   "scripts": {
     "test": "npx jest",
     "build": "npx tsc",
-    "lint": "npx eslint . --ext js,jsx,ts,tsx --cache --cache-location './out/'",
+    "lint": "npx eslint . --ext js,jsx,ts,tsx --cache --cache-location './.out/'",
     "lint-fix": "npm run lint -- --fix",
     "format": "npx prettier --write './**/*.{js,jsx,ts,tsx,json,md}'",
     "format-check": "npx prettier --list-different './**/*.{js,jsx,ts,tsx,json,md}'",
-    "rm": "rm -rf ./out/"
+    "rm": "rm -rf ./.out/"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/Userbit/xzone-ts#readme",
   "devDependencies": {
-    "@types/jest": "^24.9.0",
+    "@types/jest": "^24.9.1",
     "@types/node": "^13.1.8",
     "@types/yargs": "^15.0.0",
     "@typescript-eslint/eslint-plugin": "^2.17.0",
@@ -37,9 +37,11 @@
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^25.1.0",
+    "jest-chain": "^1.1.2",
+    "jest-extended": "^0.11.4",
     "prettier": "^1.19.1",
     "ts-jest": "^25.0.0",
-    "typescript": "^3.8.0-dev.20200123"
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "yargs": "^15.1.0"
