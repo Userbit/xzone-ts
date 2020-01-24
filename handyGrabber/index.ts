@@ -1,6 +1,5 @@
-export function add(a: number, b: number): number {
-  return a + b;
-}
-export function sub(a: number, b: number): number {
-  return a - b;
-}
+import { getCliOpts, configYargs, runYargs } from "./cli";
+
+const cliOpts = getCliOpts(runYargs(configYargs()));
+
+console.log(cliOpts);
