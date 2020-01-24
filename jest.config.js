@@ -4,7 +4,7 @@ module.exports = {
   // preset: "ts-jest",
   testEnvironment: "node",
   coverageDirectory: "./.out/jest-coverage",
-  setupFilesAfterEnv: ["./jest.setup.js"],
+  setupFilesAfterEnv: ["./.configs/jest.setup.js"],
   transform: {
     ...tsjPreset.transform,
   },

@@ -1,5 +1,5 @@
 /*
-  included in "setupFilesAfterEnv" in ./jest.config.js
+  included in "setupFilesAfterEnv" in ../jest.config.js
 */
 
 require("jest-extended");
