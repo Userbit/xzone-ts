@@ -1,6 +1,6 @@
 // This config file for VSCode is included in ../.vscode/settings.json
 // RESTART VSCODE AFTER CHANGING IT!
-const baseJestConf = require("../jest.config");
+const baseJestConf = require("../jest.config.js");
 
 // Extend or override Jest Config options in package.json for Jest extension in VSCode
 const jestVSCodeConf = {

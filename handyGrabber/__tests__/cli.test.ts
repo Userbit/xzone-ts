@@ -1,5 +1,5 @@
-import { configYargs, runYargs, getCliOpts } from "../cli";
-import Types from "../types";
+import { configYargs, runYargs, getCliOpts } from "../src/cli";
+import Types from "../src/types";
 
 import yargs = require("yargs");
 

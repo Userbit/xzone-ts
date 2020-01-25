@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "build": "npx tsc",
+    "clean": "rm -rf ./.out/",
+    "build": "npm run build:handyGrabber",
+    "build:handyGrabber": "npx tsc --build ./handyGrabber/src",
     "lint": "npx eslint . --ext js,jsx,ts,tsx --cache --cache-location './.out/'",
     "lint-fix": "npm run lint -- --fix",
     "format": "npx prettier --write './**/*.{js,jsx,ts,tsx,json,md}'",
-    "format-check": "npx prettier --list-different './**/*.{js,jsx,ts,tsx,json,md}'",
-    "rm": "rm -rf ./.out/"
+    "format-check": "npx prettier --list-different './**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "repository": {
     "type": "git",
