@@ -2,6 +2,7 @@ const { defaults: tsjPreset } = require("ts-jest/presets");
 
 module.exports = {
   // preset: "ts-jest",
+  restoreMocks: true,
   testEnvironment: "node",
   setupFilesAfterEnv: ["./.configs/jest.setup.js"],
   transform: {

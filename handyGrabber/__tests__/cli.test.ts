@@ -1,4 +1,4 @@
-import { configYargs, runYargs, getCliOpts } from "../src/cli";
+import { configYargs, runYargs, getCliOpts, runCli } from "../src/cli";
 import Types from "../src/types";
 
 import yargs = require("yargs");
@@ -10,7 +10,7 @@ const imgCmd = Types.Command.img;
 
 describe(configYargs, () => {
   test("should require at least one command", (done) => {
-    configYargs().parse([], {}, (err) => {
+    configYargs(yargs).parse([], {}, (err) => {
       expect(err?.message).toMatch("got 0, need at least 1");
       done();
     });
@@ -18,7 +18,7 @@ describe(configYargs, () => {
 
   describe(`when '${dataCmd}' command is used and`, () => {
     test("no options specified, should require 3 options", (done) => {
-      configYargs().parse([dataCmd], {}, (err) => {
+      configYargs(yargs).parse([dataCmd], {}, (err) => {
         expect(err?.message)
           .toInclude(opt.stage)
           .toInclude(opt.log)
@@ -28,7 +28,7 @@ describe(configYargs, () => {
     });
 
     test(`--${opt.stage} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs().parse([dataCmd, `--${opt.stage}`, "fake"], {}, (err) => {
+      configYargs(yargs).parse([dataCmd, `--${opt.stage}`, "fake"], {}, (err) => {
         expect(err?.message)
           .toInclude(stage.first)
           .toInclude(stage.upsert)
@@ -38,7 +38,7 @@ describe(configYargs, () => {
     });
 
     test(`--${opt.entity} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs().parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
+      configYargs(yargs).parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
         expect(err?.message)
           .toInclude(entity.movie)
           .toInclude(entity.torrent);
@@ -47,7 +47,7 @@ describe(configYargs, () => {
     });
 
     test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs().parse([dataCmd, `--${opt.log}`, "fake"], {}, (err) => {
+      configYargs(yargs).parse([dataCmd, `--${opt.log}`, "fake"], {}, (err) => {
         expect(err?.message)
           .toInclude(log.no)
           .toInclude(log.yes);
@@ -81,6 +81,7 @@ describe(getCliOpts, () => {
       log: log.no,
       entity: entity.movie,
     };
+
     const mockArgv: yargs.Arguments = {
       _: ["data"],
       $0: "path/to/script",
@@ -90,5 +91,16 @@ describe(getCliOpts, () => {
     const result = getCliOpts(mockArgv);
 
     expect(result).toStrictEqual<ReturnType<typeof getCliOpts>>({ cmd: cmd.data, ...mockOpts });
+  });
+});
+
+describe(runCli, () => {
+  it(`should call appropriate functions in a correct way`, () => {
+    // TODO
+    const originalFuncs = {
+      configYargs,
+      runYargs,
+      getCliOpts,
+    };
   });
 });

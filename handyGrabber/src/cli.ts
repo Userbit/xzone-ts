@@ -1,7 +1,7 @@
 import * as yargs from "yargs";
 import types from "./types";
 
-export function configYargs(): yargs.Argv {
+export function configYargs(innerYargs: yargs.Argv): yargs.Argv {
   type Options = { [option: string]: yargs.Options };
 
   const generalOptions: Options = {
@@ -44,7 +44,7 @@ export function configYargs(): yargs.Argv {
     handler: () => undefined,
   };
 
-  return yargs
+  return innerYargs
     .command(dataMod)
     .command(imgMod)
     .demandCommand(1);
@@ -91,4 +91,8 @@ export function getCliOpts(readyArgv: yargs.Arguments): CliOpts {
   });
 
   return cliOpts as CliOpts;
+}
+
+export function runCli() {
+  return getCliOpts(runYargs(configYargs(yargs)));
 }
