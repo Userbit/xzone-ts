@@ -1,15 +1,16 @@
-import { configYargs, runYargs, getCliOpts, runCli } from "../src/cli";
+import { cli, CliOpts } from "../src/cli";
 import Types from "../src/types";
 
 import yargs = require("yargs");
 
+const { configYargs, runYargs, getCliOpts, runCli } = cli;
 const { Option: opt, Command: cmd, entity, stage, log } = Types;
 
 const dataCmd = Types.Command.data;
 const imgCmd = Types.Command.img;
 
 describe(configYargs, () => {
-  test("should require at least one command", (done) => {
+  test("should require at least one command, when no command specified", (done) => {
     configYargs(yargs).parse([], {}, (err) => {
       expect(err?.message).toMatch("got 0, need at least 1");
       done();
@@ -37,15 +38,6 @@ describe(configYargs, () => {
       });
     });
 
-    test(`--${opt.entity} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs(yargs).parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
-        expect(err?.message)
-          .toInclude(entity.movie)
-          .toInclude(entity.torrent);
-        done();
-      });
-    });
-
     test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
       configYargs(yargs).parse([dataCmd, `--${opt.log}`, "fake"], {}, (err) => {
         expect(err?.message)
@@ -54,10 +46,39 @@ describe(configYargs, () => {
         done();
       });
     });
+
+    test(`--${opt.entity} is incorrect, should require to select a correct choice`, (done) => {
+      configYargs(yargs).parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
+        expect(err?.message)
+          .toInclude(entity.movie)
+          .toInclude(entity.torrent);
+        done();
+      });
+    });
   });
 
-  describe(`when ${imgCmd} command is used`, () => {
-    // TODO: Write tests when implementing `img` command
+  describe(`when '${imgCmd}' command is used and`, () => {
+    // TODO: Write additional tests when implementing `img` command
+    test(`--${opt.stage} is incorrect, should require to select a correct choice`, (done) => {
+      configYargs(yargs).parse([imgCmd, `--${opt.stage}`, "fake"], {}, (err) => {
+        expect(err?.message)
+          .toInclude(stage.first)
+          .toInclude(stage.upsert)
+          .toInclude(stage.check);
+        done();
+      });
+    });
+
+    test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
+      configYargs(yargs).parse([imgCmd, `--${opt.log}`, "fake"], {}, (err) => {
+        expect(err?.message)
+          .toInclude(log.no)
+          .toInclude(log.yes);
+        done();
+      });
+    });
+
+    test.todo("Write additional test when implementing 'img' command");
   });
 });
 
@@ -95,12 +116,18 @@ describe(getCliOpts, () => {
 });
 
 describe(runCli, () => {
-  it(`should call appropriate functions in a correct way`, () => {
-    // TODO
-    const originalFuncs = {
-      configYargs,
-      runYargs,
-      getCliOpts,
-    };
+  it(`should call appropriate functions in a correct way and return valid result`, () => {
+    const mockObj1 = { _: ["data"], $0: "path" };
+    const mockObj2: CliOpts = { cmd: cmd.img, log: log.yes, stage: stage.first };
+    const configYargsMock = jest.spyOn(cli, "configYargs").mockReturnValue(yargs);
+    const runYargsMock = jest.spyOn(cli, "runYargs").mockReturnValue(mockObj1);
+    const getCliOptsMock = jest.spyOn(cli, "getCliOpts").mockReturnValue(mockObj2);
+
+    const result = cli.runCli();
+
+    expect(configYargsMock).toHaveBeenCalledWith(yargs);
+    expect(runYargsMock).toHaveBeenCalledWith(yargs);
+    expect(getCliOptsMock).toHaveBeenCalledWith(mockObj1);
+    expect(result).toBe(mockObj2);
   });
 });

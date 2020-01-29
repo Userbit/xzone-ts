@@ -1,5 +1,5 @@
-import { getCliOpts, configYargs, runYargs } from "./cli";
+import { cli } from "./cli";
 
-const cliOpts = getCliOpts(runYargs(configYargs()));
+const cliOpts = cli.runCli();
 
 console.log(cliOpts);

@@ -1,7 +1,7 @@
 import * as yargs from "yargs";
 import types from "./types";
 
-export function configYargs(innerYargs: yargs.Argv): yargs.Argv {
+function configYargs(innerYargs: yargs.Argv): yargs.Argv {
   type Options = { [option: string]: yargs.Options };
 
   const generalOptions: Options = {
@@ -30,14 +30,14 @@ export function configYargs(innerYargs: yargs.Argv): yargs.Argv {
     // TODO: Add options when implementing `img` command
   };
 
-  const dataMod: yargs.CommandModule = {
+  const dataModule: yargs.CommandModule = {
     command: types.Command.data,
     describe: "Get data from remote",
     builder: (_yargs) => _yargs.options(generalOptions).options(dataOptions),
     handler: () => undefined,
   };
 
-  const imgMod: yargs.CommandModule = {
+  const imgModule: yargs.CommandModule = {
     command: types.Command.img,
     describe: "Get images from remote",
     builder: (_yargs) => _yargs.options(generalOptions).options(imgOptions),
@@ -45,42 +45,12 @@ export function configYargs(innerYargs: yargs.Argv): yargs.Argv {
   };
 
   return innerYargs
-    .command(dataMod)
-    .command(imgMod)
+    .command(dataModule)
+    .command(imgModule)
     .demandCommand(1);
 }
 
-interface ConfArgv {
-  [key: string]: unknown;
-}
-interface ConfYargs {
-  help: () => { argv: ConfArgv };
-}
-
-export function runYargs(configuredYargs: ConfYargs): yargs.Arguments {
-  return configuredYargs.help().argv as yargs.Arguments;
-}
-
-interface BaseArgv {
-  [types.Option.stage]: types.stage;
-  [types.Option.log]: types.log;
-}
-
-interface DataArgv extends BaseArgv {
-  [types.Option.entity]: types.entity;
-}
-
-type ImgArgv = BaseArgv; // TODO: Finish when implementing `img` command
-
-type CliOpts =
-  | (DataArgv & {
-      cmd: types.Command.data;
-    })
-  | (ImgArgv & {
-      cmd: types.Command.img;
-    });
-
-export function getCliOpts(readyArgv: yargs.Arguments): CliOpts {
+function getCliOpts(readyArgv: yargs.Arguments): CliOpts {
   const cliOpts: ConfArgv = {};
   [cliOpts.cmd] = readyArgv._;
 
@@ -93,6 +63,39 @@ export function getCliOpts(readyArgv: yargs.Arguments): CliOpts {
   return cliOpts as CliOpts;
 }
 
-export function runCli() {
-  return getCliOpts(runYargs(configYargs(yargs)));
+function runYargs(configuredYargs: ConfYargs): yargs.Arguments {
+  return configuredYargs.help().argv as yargs.Arguments;
 }
+
+interface ConfArgv {
+  [key: string]: unknown;
+}
+interface ConfYargs {
+  help: () => { argv: ConfArgv };
+}
+
+interface BaseArgv {
+  [types.Option.stage]: types.stage;
+  [types.Option.log]: types.log;
+}
+interface DataArgv extends BaseArgv {
+  [types.Option.entity]: types.entity;
+}
+type ImgArgv = BaseArgv; // TODO: Finish as interface when implementing `img` command
+
+export type CliOpts =
+  | (DataArgv & {
+      cmd: types.Command.data;
+    })
+  | (ImgArgv & {
+      cmd: types.Command.img;
+    });
+
+export const cli = {
+  runYargs,
+  configYargs,
+  getCliOpts,
+  runCli() {
+    return this.getCliOpts(this.runYargs(this.configYargs(yargs)));
+  },
+};
