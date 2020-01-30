@@ -13,6 +13,7 @@ describe(configYargs, () => {
   test("should require at least one command, when no command specified", (done) => {
     configYargs(yargs).parse([], {}, (err) => {
       expect(err?.message).toMatch("got 0, need at least 1");
+
       done();
     });
   });
@@ -20,38 +21,40 @@ describe(configYargs, () => {
   describe(`when '${dataCmd}' command is used and`, () => {
     test("no options specified, should require 3 options", (done) => {
       configYargs(yargs).parse([dataCmd], {}, (err) => {
-        expect(err?.message)
-          .toInclude(opt.stage)
-          .toInclude(opt.log)
-          .toInclude(opt.entity);
+        Object.keys(opt).forEach((option) => {
+          expect(err?.message).toInclude(option);
+        });
+
         done();
       });
     });
 
     test(`--${opt.stage} is incorrect, should require to select a correct choice`, (done) => {
       configYargs(yargs).parse([dataCmd, `--${opt.stage}`, "fake"], {}, (err) => {
-        expect(err?.message)
-          .toInclude(stage.first)
-          .toInclude(stage.upsert)
-          .toInclude(stage.check);
+        Object.keys(stage).forEach((option) => {
+          expect(err?.message).toInclude(option);
+        });
+
         done();
       });
     });
 
     test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
       configYargs(yargs).parse([dataCmd, `--${opt.log}`, "fake"], {}, (err) => {
-        expect(err?.message)
-          .toInclude(log.no)
-          .toInclude(log.yes);
+        Object.keys(log).forEach((option) => {
+          expect(err?.message).toInclude(option);
+        });
+
         done();
       });
     });
 
     test(`--${opt.entity} is incorrect, should require to select a correct choice`, (done) => {
       configYargs(yargs).parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
-        expect(err?.message)
-          .toInclude(entity.movie)
-          .toInclude(entity.torrent);
+        Object.keys(entity).forEach((option) => {
+          expect(err?.message).toInclude(option);
+        });
+
         done();
       });
     });
@@ -61,19 +64,20 @@ describe(configYargs, () => {
     // TODO: Write additional tests when implementing `img` command
     test(`--${opt.stage} is incorrect, should require to select a correct choice`, (done) => {
       configYargs(yargs).parse([imgCmd, `--${opt.stage}`, "fake"], {}, (err) => {
-        expect(err?.message)
-          .toInclude(stage.first)
-          .toInclude(stage.upsert)
-          .toInclude(stage.check);
+        Object.keys(stage).forEach((option) => {
+          expect(err?.message).toInclude(option);
+        });
+
         done();
       });
     });
 
     test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
       configYargs(yargs).parse([imgCmd, `--${opt.log}`, "fake"], {}, (err) => {
-        expect(err?.message)
-          .toInclude(log.no)
-          .toInclude(log.yes);
+        Object.keys(log).forEach((option) => {
+          expect(err?.message).toInclude(option);
+        });
+
         done();
       });
     });
@@ -102,7 +106,6 @@ describe(getCliOpts, () => {
       log: log.no,
       entity: entity.movie,
     };
-
     const mockArgv: yargs.Arguments = {
       _: ["data"],
       $0: "path/to/script",
