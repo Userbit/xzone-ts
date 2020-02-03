@@ -10,75 +10,89 @@ const dataCmd = Types.Command.data;
 const imgCmd = Types.Command.img;
 
 describe(configYargs, () => {
-  test("should require at least one command, when no command specified", (done) => {
-    configYargs(yargs).parse([], {}, (err) => {
-      expect(err?.message).toMatch("got 0, need at least 1");
+  test("should require at least one command, when no command specified", () => {
+    return new Promise((done) => {
+      configYargs(yargs).parse([], {}, (err) => {
+        expect(err?.message).toMatch("got 0, need at least 1");
 
-      done();
+        done();
+      });
     });
   });
 
   describe(`when '${dataCmd}' command is used and`, () => {
-    test("no options specified, should require 3 options", (done) => {
-      configYargs(yargs).parse([dataCmd], {}, (err) => {
-        Object.keys(opt).forEach((option) => {
-          expect(err?.message).toInclude(option);
-        });
+    test("no options specified, should require 3 options", () => {
+      return new Promise((done) => {
+        configYargs(yargs).parse([dataCmd], {}, (err) => {
+          Object.keys(opt).forEach((option) => {
+            expect(err?.message).toInclude(option);
+          });
 
-        done();
+          done();
+        });
       });
     });
 
-    test(`--${opt.stage} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs(yargs).parse([dataCmd, `--${opt.stage}`, "fake"], {}, (err) => {
-        Object.keys(stage).forEach((option) => {
-          expect(err?.message).toInclude(option);
-        });
+    test(`--${opt.stage} is incorrect, should require to select a correct choice`, () => {
+      return new Promise((done) => {
+        configYargs(yargs).parse([dataCmd, `--${opt.stage}`, "fake"], {}, (err) => {
+          Object.keys(stage).forEach((option) => {
+            expect(err?.message).toInclude(option);
+          });
 
-        done();
+          done();
+        });
       });
     });
 
-    test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs(yargs).parse([dataCmd, `--${opt.log}`, "fake"], {}, (err) => {
-        Object.keys(log).forEach((option) => {
-          expect(err?.message).toInclude(option);
-        });
+    test(`--${opt.log} is incorrect, should require to select a correct choice`, () => {
+      return new Promise((done) => {
+        configYargs(yargs).parse([dataCmd, `--${opt.log}`, "fake"], {}, (err) => {
+          Object.keys(log).forEach((option) => {
+            expect(err?.message).toInclude(option);
+          });
 
-        done();
+          done();
+        });
       });
     });
 
-    test(`--${opt.entity} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs(yargs).parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
-        Object.keys(entity).forEach((option) => {
-          expect(err?.message).toInclude(option);
-        });
+    test(`--${opt.entity} is incorrect, should require to select a correct choice`, () => {
+      return new Promise((done) => {
+        configYargs(yargs).parse([dataCmd, `--${opt.entity}`, "fake"], {}, (err) => {
+          Object.keys(entity).forEach((option) => {
+            expect(err?.message).toInclude(option);
+          });
 
-        done();
+          done();
+        });
       });
     });
   });
 
   describe(`when '${imgCmd}' command is used and`, () => {
     // TODO: Write additional tests when implementing `img` command
-    test(`--${opt.stage} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs(yargs).parse([imgCmd, `--${opt.stage}`, "fake"], {}, (err) => {
-        Object.keys(stage).forEach((option) => {
-          expect(err?.message).toInclude(option);
-        });
+    test(`--${opt.stage} is incorrect, should require to select a correct choice`, () => {
+      return new Promise((done) => {
+        configYargs(yargs).parse([imgCmd, `--${opt.stage}`, "fake"], {}, (err) => {
+          Object.keys(stage).forEach((option) => {
+            expect(err?.message).toInclude(option);
+          });
 
-        done();
+          done();
+        });
       });
     });
 
-    test(`--${opt.log} is incorrect, should require to select a correct choice`, (done) => {
-      configYargs(yargs).parse([imgCmd, `--${opt.log}`, "fake"], {}, (err) => {
-        Object.keys(log).forEach((option) => {
-          expect(err?.message).toInclude(option);
-        });
+    test(`--${opt.log} is incorrect, should require to select a correct choice`, () => {
+      return new Promise((done) => {
+        configYargs(yargs).parse([imgCmd, `--${opt.log}`, "fake"], {}, (err) => {
+          Object.keys(log).forEach((option) => {
+            expect(err?.message).toInclude(option);
+          });
 
-        done();
+          done();
+        });
       });
     });
 
