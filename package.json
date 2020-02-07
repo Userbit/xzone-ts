@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "test:changed": "npx jest --onlyChanged",
+    "test-changed": "npx jest --onlyChanged",
     "clean": "rm -rf ./.out/",
-    "build": "npm run build:handyGrabber",
-    "build:handyGrabber": "npx tsc --build ./handyGrabber/src",
+    "build": "npx tsc --build",
+    "build-handyGrabber": "npx tsc --build ./handyGrabber/src",
     "lint": "npx eslint . --ext js,jsx,ts,tsx --cache --cache-location './.out/'",
     "lint-fix": "npm run lint -- --fix",
     "format": "npx prettier --write './**/*.{js,jsx,ts,tsx,json,md}'",
@@ -28,8 +28,8 @@
     "@types/jest": "^24.9.1",
     "@types/node": "^13.7.0",
     "@types/yargs": "^15.0.3",
-    "@typescript-eslint/eslint-plugin": "^2.18.0",
-    "@typescript-eslint/parser": "^2.18.0",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^6.3.1",
     "eslint-config-prettier": "^6.10.0",
@@ -43,7 +43,7 @@
     "jest-chain": "^1.1.5",
     "jest-extended": "^0.11.5",
     "prettier": "^1.19.1",
-    "ts-jest": "^25.1.0",
+    "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
   },
   "dependencies": {
